@@ -9,6 +9,7 @@
 	<script>
 		$(document).ready(function() {
 			var Audio = window.Audio;
+			Audio.timer = null;
 			var APP_FAILURE_MSG = '设备没有联网，请联网重试^_^';
 
 			if(navigator && navigator.onLine === false) {

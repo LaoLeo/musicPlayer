@@ -1,6 +1,6 @@
 Audio.scale = (function() {
 
-	function Scale (progressSeletor, dura){
+	function Scale (progressSeletor, dura, audio){
 
 	    this.n=0; //播放时长，以秒为单位
 	    this.timer = null; //计时器
@@ -17,21 +17,18 @@ Audio.scale = (function() {
 		this.totalNode = $progress.find('.total')[0];
 		
 		//初始化
-		this.init(dura);				
+		this.init(dura, audio);				
 	};
 	Scale.prototype={
-		init:function (dura){
+		init:function (dura, audio){
 			var f=this,g=document,b=window,m=Math;
 
 			//渲染歌曲的格式化总时长
-			var d = Math.round(parseFloat(dura));
-			var m = parseInt(d/60);
-			var s = parseInt(d%60);
-			f.total = f.toDub(m) + ':' + f.toDub(s);
-			f.totalNode.innerHTML = f.total;
+			var total = this.resetTotal(dura)
+			f.totalNode.innerHTML = total;
 
 			//歌曲时长
-			f.sum = d;
+			f.sum = Math.round(parseFloat(dura));
 			//进度条长度
 			f.max = f.bar.offsetWidth-f.btn.offsetWidth;
 
@@ -45,7 +42,7 @@ Audio.scale = (function() {
 					var to=m.min(max,m.max(-2,l+(thisX-x)));  //想到达的位置
 					f.btn.style.left=to+'px';
 
-					f.listenTo(to);				
+					f.listenTo(to, audio);				
 
 					b.getSelection ? b.getSelection().removeAllRanges() : g.selection.empty();
 				};
@@ -58,12 +55,12 @@ Audio.scale = (function() {
 				var to =  x - left;
 				f.btn.style.left=to+'px';
 
-				f.listenTo(to);
+				f.listenTo(to, audio);
 
 			}
 		},
 		//调整听歌的进度
-		listenTo:function (x){
+		listenTo:function (x, audio){
 
 			this.steps = Math.max(0,x) * 100;
 			this.step.style.width= (this.steps/100)+'px';
@@ -73,6 +70,11 @@ Audio.scale = (function() {
 			var s = parseInt(this.n%60);
 			var curr = this.toDub(m) + ':' + this.toDub(s);
 			this.currNode.innerHTML = curr;
+
+			clearInterval(Audio.timer);
+			audio.currentTime = this.n;
+			console.log("now:" + this.n)
+			this.running();
 		},
 
 		//进度计时
@@ -106,8 +108,9 @@ Audio.scale = (function() {
 
 			clearInterval(this.timer);
 			//必须返回出去，在外才能清除计时器
-			return this.timer = setInterval(function() {
+			this.timer = setInterval(function() {
 					//计时
+					console.log(that.n)
 					var n = ++that.n;
 					if(n > that.sum) {
 						n = that.sum
@@ -124,6 +127,8 @@ Audio.scale = (function() {
 					that.step.style.width = Math.min(that.steps/100, that.max) + 'px';
 					that.btn.style.left = Math.min(that.steps/100, that.max) + 'px';
 				}, 1000)
+
+			return this.timer
 		},
 
 		//补零
@@ -131,14 +136,31 @@ Audio.scale = (function() {
 	        return n<10?"0"+n:""+n;
 	    },
 
-		//重置
+		//重置进度条
 		areset: function (){
 			this.n=0,this.steps=0;
 			this.step.style.width = '0px';
 			this.btn.style.left = '0px';
 			this.currNode.innerHTML = '00:00';
+		},
+
+		//重值歌曲时长
+		resetTime: function(duration) {
+			this.sum = duration;
+			this.total = this.resetTotal(duration);		
+			this.totalNode.innerHTML = this.total;			
+		},
+
+		//重置两遍的时钟
+		resetTotal: function(duration) {
+			var d = Math.round(parseFloat(duration));
+			var m = parseInt(d/60);
+			var s = parseInt(d%60);
+			this.total = this.toDub(m) + ':' + this.toDub(s);
+
+			return this.total;
 		}
-    
+    	
 	};
 
 	return {

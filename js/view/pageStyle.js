@@ -26,24 +26,26 @@ Audio.pageStyle = (function(){
 		song: '简单爱'
 	}];
 
+	function init() {
+		var winHeight = $(window).height();
+		var navHeight =	$('nav').outerHeight(true);
+		console.log(winHeight)
+		console.log(navHeight)
+		$('#playerPage .bg').height(winHeight - navHeight);
+	}
+	var a; //进度条对象
+	var dura; //歌曲时长
+	var flag; //播放开关
 	function changePlay(){
 
 		var audio = document.getElementById('audio');
-		var dura;
-		var a;
-		var b;
+		var playContainer =  document.getElementsByClassName('playContainer')[0];		
+		flag = false;
+		
 		audio.onloadedmetadata = function() {
 			dura = this.duration;
-			a = new Audio.scale.Scale('.lanren', dura);
-		}
-
-		audio.onended = function() {
-			Audio.playerController.nextSong(a, songs);
-			Audio.playerController.play(a, dataWaining);
-		}
-
-		var playContainer =  document.getElementsByClassName('playContainer')[0];		
-		var flag = false;
+			a = new Audio.scale.Scale('.lanren', dura, this);
+		};	
 
 		playContainer.addEventListener('click', function(event){
 			var target = event.target;
@@ -54,19 +56,12 @@ Audio.pageStyle = (function(){
 				if(flag){
 					//console.log(a.n)
 					playStatus(); //播放
-					if(b) {
-						Audio.playerController.play(b, dataWaining);
-					}else {
-						Audio.playerController.play(a, dataWaining);
-					}	
+					Audio.playerController.play( a, dataWaining);
 					
 				}else {
 					pauseStatus(); //暂停
-					if (b) {
-						Audio.playerController.pause(b);
-					} else {
-						Audio.playerController.pause(a);
-					};				
+					Audio.playerController.pause(a);
+			
 				}
 			}else if(target.title && target.title == 'forward') {
 				Audio.playerController.nextSong(a, songs);				
@@ -79,23 +74,42 @@ Audio.pageStyle = (function(){
 			audio.ondurationchange = function() {
 				var t = this.duration;
 				if( t != dura ){
-					b = new Audio.scale.Scale('.lanren', t);
+					a.resetTime(t);
+
 					if(flag){
 						playStatus(); //播放
-						Audio.playerController.play(b, dataWaining);
+						Audio.playerController.play(a, dataWaining);
 					}else {
-						Audio.playerController.pause(b);
+						Audio.playerController.pause(a);
 					}
 				}else {
-					dataWaining('网络延迟请骚等');
+					dataWaining('网络延迟请重新播放');
 				}
-				
-			} 		
+			}		
 
-		}, false);
-
-		
+		}, false);	
 	
+	};
+
+	function next() {
+		pauseStatus();
+		Audio.playerController.nextSong(a, songs);				
+	
+		audio.ondurationchange = function() {
+			var t = this.duration;
+			if( t != dura ){
+				a.resetTime(t);
+
+				if(flag){
+					playStatus(); //播放
+					Audio.playerController.play(a, dataWaining);
+				}else {
+					Audio.playerController.pause(a);
+				}
+			}else {
+				dataWaining('网络延迟请重新播放');
+			}
+		}		
 	};
 
 	function playStatus(){
@@ -130,7 +144,9 @@ Audio.pageStyle = (function(){
 	return {
 		changePlay: changePlay,
 		pauseStatus: pauseStatus,
-		playStatus: playStatus
+		playStatus: playStatus,
+		init: init,
+		next: next
 	}
 }())
 

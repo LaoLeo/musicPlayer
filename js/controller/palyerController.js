@@ -1,7 +1,6 @@
 Audio.playerController = (function(){
 	
 	var index = 0;
-	var timer = null;
 
 	function play(a, failureCB) {
 		var audio = document.getElementById('audio');
@@ -9,11 +8,10 @@ Audio.playerController = (function(){
 		audio.play(); //播放
 
 		audio.onplay = function() {
-			timer = a.running(); //进度条走起
+			Audio.timer = a.running(); //进度条走起
 		};
 		audio.onended = function() {
-			Audio.pageStyle.pauseStatus();
-			clearInterval(timer);
+			Audio.pageStyle.next(); //自动播放下一首
 		}
 		
 		audio.onerror = function() {
@@ -29,7 +27,7 @@ Audio.playerController = (function(){
 	function pause() {
 		audio.pause();
 		audio.onpause = function() {
-			clearInterval(timer);
+			clearInterval(Audio.timer);
 		}		
 	}
 
@@ -37,7 +35,7 @@ Audio.playerController = (function(){
 	function nextSong(a, songs) {
 		//重置进度条 并 清除定时器
 		a.areset();
-		clearInterval(timer);
+		clearInterval(Audio.timer);
 
 		//渲染音乐资源
 		index++;
@@ -51,7 +49,7 @@ Audio.playerController = (function(){
 	function prevSong(a, songs) {
 		//重置进度条
 		a.areset();
-		clearInterval(timer);
+		clearInterval(Audio.timer);
 
 		index--;
 		if(index <= -1) {
@@ -74,14 +72,6 @@ Audio.playerController = (function(){
 		$singer.html(data.singer);
 		$img.attr('src', data.img);
 		$mpSrc.attr('src', data.src);
-
-
-		//console.log('bb' + oAudio.duration)
-
-		/*return oAudio.oncanplaythrough = function(){
-			console.log(this.duration)
-			return dura = this.duration;
-		}()*/
 
  	}
 

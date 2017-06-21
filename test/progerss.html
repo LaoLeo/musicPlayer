@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>progress</title>
+	<style>
+		ul li{
+			font-size:12px;
+			line-height:24px;
+			height:24px;
+			list-style:none;
+			float: left;
+			margin-right: 20px;
+		}
+		ul li:last-child{
+			margin-right: 0;
+		}
+		.progress progress{
+			-webkit-appearance: none;
+			position: relative;
+		}
+		.progress progress::-webkit-progress-inner-element{
+			height: 24px;
+			line-height: 24px;
+		}
+		.progress progress::-webkit-progress-bar{
+			height: 2px;
+			background-color: #e4e4e4;
+		}
+		.progress progress::-webkit-progress-value{
+			background-color: #f9afaf;			
+		}
+		.progress #nowBtn{
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			-webkit-border-radius: 50%;
+			background-color: #000;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>00:00</li>
+		<li>
+			<div class="progress">
+				<progress value="0.1"></progress>
+				<span id="nowBtn"></span>
+			</div>
+		</li>
+		<li>03:56</li>
+	</ul>
+</body>
+</html>

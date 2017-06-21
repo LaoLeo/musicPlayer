@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>仿QQ音乐播放器</title>
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./css/iconfont.css">
+	<script src="./js/lib/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var Audio = window.Audio;
+			var APP_FAILURE_MSG = '设备没有联网，请联网重试^_^';
+
+			if(navigator && navigator.onLine === false) {
+				alert(APP_FAILURE_MSG )
+			}else {
+				Audio.appController.start();
+			}
+			
+		})
+	</script>
+	
+	<script src="./js/view/scale.js"></script>
+	<script src="./js/view/pageStyle.js"></script>
+	<script src="./js/controller/palyerController.js"></script>
+	<script src="./js/controller/appController.js"></script>
+</head>
+<body style="background: rgba(0, 0, 0, 0.5)">
+	
+	<nav class="mynav">
+		<div>
+			<p><span></span><span></span><span></span></p>
+			<span class="left">&lsaquo;</span><span class="right">&rsaquo;</span>
+		</div>		
+	</nav>
+
+	<!-- 搜索和列表页开始-->
+	<section id="searchPage" style="display: none;">
+
+		<h1>搜索音乐</h1>
+		<form action="">
+			<input type="search" placeholder="歌手/歌曲" name="search" id="search">
+			<button type="submit" value="搜索"><span class="iconfont icon-sousuo-sousuo"></span></button>
+		</form>
+		<ul id="musicList">
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>				
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span>逆战</span> <br>
+					<span>张杰</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- 搜索和列表页结束-->
+	
+
+	<!--播放页面开始-->
+	<section id="playerPage">
+		<div class="bg"></div>
+		<div class="pageContent">
+			<div class="musicName">
+				<h2>逆战</h2>
+				<p>-<span>张杰</span>-</p>
+			</div>		
+			<div class="positer">
+				<img src="http://imgcache.qq.com/music/photo/album_500/28/500_albumpic_148828_0.jpg" alt="歌曲海报">
+			</div>
+
+			<div class="playerComponent">
+				
+				<ul class="lanren">
+					<li class="curr">00:00</li>
+					<input id="curr" type="hidden" value="00:00">
+					<li class="progress">
+						<div class="scale" id="bar">
+							<div></div>
+							<span id="btn"></span>
+						</div>
+					</li>
+					<li class="total">03:36</li>
+					<input id="total" type="hidden" value="03:36">
+				</ul>
+				<div class="playContainer">
+					<li class="rewindBtn">  
+					    <a href="javascript:;" title="rewind">Rewind</a>  
+					    <a href="javascript:;" title="rewind">Rewind</a>  
+					</li>
+					<li class="playBtn BtnBig">  
+					    <a href="javascript:;" title="start">Start</a>  
+					</li>
+					<!--
+					<li class="pauseBtn">  
+					    <a href="#" title="pause">Pause</a>  
+					</li> 
+					--> 
+					 
+					<li class="forwardBtn playBtn">  
+					    <a href="javascript:;" title="forward">Forward</a>  
+					    <a href="javascript:;" title="forward">Forward</a>  
+					</li>  
+					
+				</div>
+					
+			</div>			
+			<div>
+				<audio id="audio" src="http://ws.stream.qqmusic.qq.com/5166863.m4a?fromtag=46"></audio>
+			</div>
+		</div>
+	</section>
+	<!--播放页面结束-->
+</body>
+
+</html>

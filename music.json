@@ -1,0 +1,88 @@
+{
+    "code": 0,
+    "data": {
+        "keyword": "",
+        "priority": 0,
+        "qc": [],
+        "semantic": {
+            "curnum": 0,
+            "curpage": 1,
+            "list": [],
+            "totalnum": 0
+        },
+        "song": {
+            "curnum": 8,
+            "curpage": 1,
+            "list": [
+                {
+                    "albumName_hilight": "One Chance 新歌+精选",
+                    "chinesesinger": 0,
+                    "docid": "6921558797205498478",
+                    "f": "5166863|逆战|6499|张杰|148828|One Chance 新歌+精选|1997392|231|8|1|0|9262199|3705014|320000|0|29348728|29447126|4863177|5430303|0|001RdTuq0aarsS|002azErJ0UcDN6|002gnOZC4T8gXF|0|4009",
+                    "fiurl": "",
+                    "fnote": 2009,
+                    "fsinger": "张杰",
+                    "fsinger2": "",
+                    "fsong": "逆战",
+                },
+                 {
+                    "albumName_hilight": "周杰伦的床边故事",
+                    "chinesesinger": 0,
+                    "docid": "7065911643897223382",
+                    "f": "107192078|告白气球|4558|周杰伦|1458791|周杰伦的床边故事|1856582|215|1|1|0|8608939|3443771|2116000|0|24929083|24971563|5001304|5191087|0|003OUlho2HcRHC|0025NhlN2yWrP4|003RMaRI1iFoYd|0|4009",
+                    "fiurl": "",
+                    "fnote": 2009,
+                    "fsinger": "周杰伦",
+                    "fsinger2": "",
+                    "fsong": "告白气球",
+                },
+                {               
+                    "albumName_hilight": "<span class=\"c_tx_highlight\">说散就散</span>",
+                    "chinesesinger": 0,
+                    "docid": "9006076564742702299",
+                    "f": "107283617|说散就散|1171873|JC|1471640|说散就散|1987772|230|10|1|1|9225600|3690357|320000|0|0|0|4873090|5314266|0|0000IMz11ZP6GY|000quag73Rfu0i|003Mq67P3OVLXo|0|4009",
+                    "fiurl": "",
+                    "fnote": 2009,
+                    "fsinger": "JC",
+                    "fsinger2": "",
+                    "fsong": "说散就散",
+                } ,
+                {
+                    "albumName_hilight": "<span class=\"c_tx_highlight\">普通Disco</span>",
+                    "chinesesinger": 0,
+                    "docid": "1520046547433902750",
+                    "f": "102345074|普通Disco|187111|花僮|982081|普通Disco|1955784|226|1|1|1|9078258|3631437|320000|0|30571074|30694222|5668293|5593185|0|002Ld4mK2HZWxD|001r6H560AOJMq|002cf4Yl3zVOiE|0|4009",
+                    "fiurl": "",
+                    "fnote": 2009,
+                    "fsinger": "花僮",
+                    "fsinger2": "",
+                    "fsong": "普通Disco",
+                },
+                {
+                    "albumName_hilight": "范特西",
+                    "chinesesinger": 0,
+                    "docid": "17128718787565259111",
+                    "f": "97744|简单爱|4558|周杰伦|8217|范特西|2201337|271|1|1|0|10843422|4338381|320000|0|31636245|32393334|6511185|6723781|0|0009BCJK1nRaad|0025NhlN2yWrP4|000I5jJB3blWeN|0|4009",
+                    "fiurl": "",
+                    "fnote": 2009,
+                    "fsinger": "周杰伦",
+                    "fsinger2": "",
+                    "fsong": "简单爱",
+
+                }
+                            
+            ],
+            "totalnum": 110
+        },
+        "totaltime": 0.000056,
+        "zhida": {
+            "chinesesinger": 0,
+            "type": 0
+        }
+    },
+    "message": "",
+    "notice": "",
+    "subcode": 0,
+    "time": 1497706173,
+    "tips": ""
+}

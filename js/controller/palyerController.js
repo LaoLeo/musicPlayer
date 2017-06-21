@@ -8,6 +8,7 @@ Audio.playerController = (function(){
 		audio.play(); //播放
 
 		audio.onplay = function() {
+			clearInterval(Audio.timer);
 			Audio.timer = a.running(); //进度条走起
 		};
 		audio.onended = function() {
@@ -28,6 +29,7 @@ Audio.playerController = (function(){
 		audio.pause();
 		audio.onpause = function() {
 			clearInterval(Audio.timer);
+			console.log(123)
 		}		
 	}
 

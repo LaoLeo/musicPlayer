@@ -73,8 +73,11 @@ Audio.scale = (function() {
 
 			clearInterval(Audio.timer);
 			audio.currentTime = this.n;
-			console.log("now:" + this.n)
-			this.running();
+			console.log("now:" + this.n);
+
+			if(!audio.paused){
+				Audio.timer = this.running();
+			}
 		},
 
 		//进度计时
@@ -110,7 +113,6 @@ Audio.scale = (function() {
 			//必须返回出去，在外才能清除计时器
 			this.timer = setInterval(function() {
 					//计时
-					console.log(that.n)
 					var n = ++that.n;
 					if(n > that.sum) {
 						n = that.sum

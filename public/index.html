@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>仿QQ音乐播放器</title>
+	<title>仿音乐播放器WebApp</title>
 	<link rel="stylesheet" href="./css/style.css">
 	<link rel="stylesheet" href="./css/iconfont.css">
 	<script src="./js/lib/jquery.min.js"></script>
@@ -11,16 +11,75 @@
 			var Audio = window.Audio;
 			Audio.timer = null;
 			var APP_FAILURE_MSG = '设备没有联网，请联网重试^_^';
+			
+
+			 
 
 			if(navigator && navigator.onLine === false) {
 				alert(APP_FAILURE_MSG )
 			}else {
 				Audio.appController.start();
 			}
+
+			//搜索
+			$('#form').submit(function(e) {
+				//取消按钮默认行为
+				e.preventDefault();
+
+				var content = $('#search').val();
+				if(content == '') {
+					alert("内容不能为空");
+					return false;
+				}
+
+				//请求
+				$.ajax({
+					type: 'get',
+					url: '/api/songs?search=' + content,
+					dataType: 'json'
+				})
+				.done(function(result) {
+					if(!result.data) {
+						alert('搜索不到,您可以尝试搜索英文歌^_^');
+					}else {
+						console.log(result.data)
+						var songs = result.data;
+						var htmlStr = '';
+						songs.forEach(function(item, i) {
+							var str = '<li><a href="javascript:;" data-id=' + i + '><span>' + item.song + '</span> <br><span>' + item.singer + '</span></a></li>';
+							
+							htmlStr += str;
+						})
+						$('#musicList').html(htmlStr);
+
+						$('#musicList a').on('click', function(e) {
+							var target = $(e.target);
+        					var id = target.data('id');
+							var song = songs[id];
+							console.log(song)
+							var index = Audio.index + 1;
+							if(song != 'undefined') {
+								Audio.songs[index] = song;
+								Audio.pageStyle.turnPlayer();
+								clearInterval(Audio.timer);
+								Audio.pageStyle.next();
+							}else {
+								alert('请重试！')
+							}
+							
+						} )
+					}
+				});
+
+						 				
+			});
+
+
 			
 		})
 	</script>
 	
+	<script src="./js/songs.js"></script>
 	<script src="./js/view/scale.js"></script>
 	<script src="./js/view/pageStyle.js"></script>
 	<script src="./js/controller/palyerController.js"></script>
@@ -30,73 +89,11 @@
 	
 	<nav class="mynav">
 		<div>
-			<p><span></span><span></span><span></span></p>
+			<p><span></span><span></span></p>
 			<span class="left">&lsaquo;</span><span class="right">&rsaquo;</span>
 		</div>		
 	</nav>
-
-	<!-- 搜索和列表页开始-->
-	<section id="searchPage" style="display: none;">
-
-		<h1>搜索音乐</h1>
-		<form action="">
-			<input type="search" placeholder="歌手/歌曲" name="search" id="search">
-			<button type="submit" value="搜索"><span class="iconfont icon-sousuo-sousuo"></span></button>
-		</form>
-		<ul id="musicList">
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>				
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span>逆战</span> <br>
-					<span>张杰</span>
-				</a>
-			</li>
-		</ul>
-	</section>
-	<!-- 搜索和列表页结束-->
 	
-
 	<!--播放页面开始-->
 	<section id="playerPage">
 		<div class="bg"></div>
@@ -113,7 +110,6 @@
 				
 				<ul class="lanren">
 					<li class="curr">00:00</li>
-					<input id="curr" type="hidden" value="00:00">
 					<li class="progress">
 						<div class="scale" id="bar">
 							<div></div>
@@ -121,7 +117,6 @@
 						</div>
 					</li>
 					<li class="total">03:36</li>
-					<input id="total" type="hidden" value="03:36">
 				</ul>
 				<div class="playContainer">
 					<li class="rewindBtn">  
@@ -151,6 +146,18 @@
 		</div>
 	</section>
 	<!--播放页面结束-->
+
+
+	<!-- 搜索和列表页开始-->
+	<section id="searchPage" class="touming">
+		<h1>搜索音乐</h1>
+		<form action="javascript:;" id="form">
+			<input type="search" placeholder="歌手/歌曲" name="search" id="search">
+			<button type="submit" value="搜索"><span class="iconfont icon-sousuo-sousuo"></span></button>
+		</form>
+		<ul id="musicList"></ul>
+	</section>
+	<!-- 搜索和列表页结束-->
 </body>
 
 </html>

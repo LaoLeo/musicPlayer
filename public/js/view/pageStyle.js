@@ -1,37 +1,18 @@
 Audio.pageStyle = (function(){
-	var songs = [{
-		src: 'http://ws.stream.qqmusic.qq.com/5166863.m4a?fromtag=46',
-		img: 'http://imgcache.qq.com/music/photo/album_500/28/500_albumpic_148828_0.jpg',
-		singer: '张杰',
-		song: '逆战'
-	},{
-		src: 'http://ws.stream.qqmusic.qq.com/107192078.m4a?fromtag=46',
-		img: 'http://imgcache.qq.com/music/photo/album_500/91/500_albumpic_1458791_0.jpg',
-		singer: '周杰伦',
-		song: '告白气球'
-	},{
-		src: 'http://ws.stream.qqmusic.qq.com/107283617.m4a?fromtag=46',
-		img: 'http://imgcache.qq.com/music/photo/album_500/40/500_albumpic_1471640_0.jpg',
-		singer: 'JC',
-		song: '说散就散'
-	},{
-		src: 'http://ws.stream.qqmusic.qq.com/102345074.m4a?fromtag=46',
-		img: 'http://imgcache.qq.com/music/photo/album_500/81/500_albumpic_982081_0.jpg',
-		singer: '花童',
-		song: '普通disco'
-	},{
-		src: 'http://ws.stream.qqmusic.qq.com/97744.m4a?fromtag=46',
-		img: 'http://imgcache.qq.com/music/photo/album_500/17/500_albumpic_8217_0.jpg',
-		singer: '周杰伦',
-		song: '简单爱'
-	}];
 
 	function init() {
 		var winHeight = $(window).height();
 		var navHeight =	$('nav').outerHeight(true);
-		console.log(winHeight)
-		console.log(navHeight)
 		$('#playerPage .bg').height(winHeight - navHeight);
+
+		$('.left').click(turnPlayer);
+		$('.right').click(function() {
+			$('#searchPage').removeClass('touming');
+			$('#playerPage').fadeOut();
+			$('#searchPage').fadeIn();	
+			$('.mynav p').find('span:eq(0)').css({'background-color': '#000000'});
+			$('.mynav p').find('span:eq(1)').css({'background-color': '#ffffff'});
+		})
 	}
 	var a; //进度条对象
 	var dura; //歌曲时长
@@ -64,17 +45,21 @@ Audio.pageStyle = (function(){
 			
 				}
 			}else if(target.title && target.title == 'forward') {
-				Audio.playerController.nextSong(a, songs);				
+				Audio.playerController.nextSong(a, Audio.songs);				
 				flag = true;																	
 			}else if(target.title && target.title == 'rewind'){
-				Audio.playerController.prevSong(a, songs);
+				Audio.playerController.prevSong(a,  Audio.songs);
 				flag = true;			
 			};
 
 			audio.ondurationchange = function() {
 				var t = this.duration;
 				if( t != dura ){
-					a.resetTime(t);
+					if(a.resetTime) {
+						a.resetTime(t);
+					} else {
+						dataWaining("歌曲还在缓冲中...")
+					}	
 
 					if(flag){
 						playStatus(); //播放
@@ -92,13 +77,18 @@ Audio.pageStyle = (function(){
 	};
 
 	function next() {
+		flag = true;
 		pauseStatus();
-		Audio.playerController.nextSong(a, songs);				
+		Audio.playerController.nextSong(a,  Audio.songs);				
 	
 		audio.ondurationchange = function() {
 			var t = this.duration;
 			if( t != dura ){
-				a.resetTime(t);
+				if(a.resetTime) {
+					a.resetTime(t);
+				} else {
+					dataWaining("歌曲还在缓冲中...")
+				}
 
 				if(flag){
 					playStatus(); //播放
@@ -138,6 +128,13 @@ Audio.pageStyle = (function(){
 		return false;
 	};
 
+	function turnPlayer() {
+
+		$('#searchPage').fadeOut();
+		$('#playerPage').fadeIn();
+		$('.mynav p').find('span:eq(1)').css({'background-color': '#000000'});
+		$('.mynav p').find('span:eq(0)').css({'background-color': '#ffffff'});
+	}
 
 
 
@@ -146,7 +143,8 @@ Audio.pageStyle = (function(){
 		pauseStatus: pauseStatus,
 		playStatus: playStatus,
 		init: init,
-		next: next
+		next: next,
+		turnPlayer: turnPlayer
 	}
 }())
 

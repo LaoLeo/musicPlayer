@@ -100,7 +100,13 @@
   }
 }
 
-
+.spanActive{
+	background-color: #ffffff;
+}
+.touming{
+	/*不能display: none,要不然在页面初始化时拿不到进度条的长度*/
+	display: none;
+}
 .mynav{
 	height: 100px;
 	width: 100%;
@@ -116,6 +122,9 @@
 	position: absolute;
 	top: 50%;
 	margin-top: -12px;
+}
+.mynav p span:first-child{
+	background-color: #fff;
 }
 .mynav p span{
 	display: inline-block;
@@ -133,6 +142,8 @@
 	position: absolute;
 	top: -10px;
 	left: 50px;
+	width: 100px;
+    display: inline-block;
 }
 .mynav .right{
 	font-size: 80px;
@@ -140,18 +151,26 @@
 	position: absolute;
 	top: -10px;
 	right: 50px;
+	width: 100px;
+    display: inline-block;
 }
 
 /*搜索页*/
 #searchPage{
 	margin-top: 50px;
 	text-align: center;
+	transition: opacity 1s ;
+	-webkit-transition: opacity 1s ;
+	-moz-transition: opacity 1s ;
+	-o-transition: opacity 1s ;
 }
 #searchPage h1{
 	font-size: 50px;
 	padding: 50px 0;
     margin-top: 80px;
 	letter-spacing: 10px;
+	color: #ffffff;
+	font-family: "Microsoft YaHei";
 }
 #searchPage form{
 	padding:20px 10px;
@@ -165,6 +184,7 @@
 	-webkit-box-shadow: 1px 1px 5px #6b6969;
 	-moz-box-shadow: 0 0 1px  #827e7e;
 	font-size: 40px;
+	text-indent: 10px;
 }
 #searchPage form button[type=submit]{	
     border-radius: 12px;
@@ -399,7 +419,9 @@ li.BtnBig{
 }    
 .forwardBtn a { 
 	border-left-width: 16px; 
-	left: 2px; 
+	left: 2px;
+	border-width: 16px 0 16px 16px;
+	top: -15px;
 }  
 .forwardBtn a:first-child { 
 	margin-left: -14px;  

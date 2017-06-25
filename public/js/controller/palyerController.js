@@ -1,6 +1,6 @@
 Audio.playerController = (function(){
 	
-	var index = 0;
+	Audio.index = 0;
 
 	function play(a, failureCB) {
 		var audio = document.getElementById('audio');
@@ -9,8 +9,14 @@ Audio.playerController = (function(){
 
 		audio.onplay = function() {
 			clearInterval(Audio.timer);
-			Audio.timer = a.running(); //进度条走起
+			if(a.running) {
+				Audio.timer = a.running(); //进度条走起
+			}else {
+				alert('歌曲还在缓冲中...');
+				return;
+			}					
 		};
+		
 		audio.onended = function() {
 			Audio.pageStyle.next(); //自动播放下一首
 		}
@@ -29,7 +35,6 @@ Audio.playerController = (function(){
 		audio.pause();
 		audio.onpause = function() {
 			clearInterval(Audio.timer);
-			console.log(123)
 		}		
 	}
 
@@ -40,7 +45,8 @@ Audio.playerController = (function(){
 		clearInterval(Audio.timer);
 
 		//渲染音乐资源
-		index++;
+		Audio.index++;
+		var index = Audio.index;
 		if(index >= songs.length) {
 			index = 0;
 		}
@@ -53,7 +59,8 @@ Audio.playerController = (function(){
 		a.areset();
 		clearInterval(Audio.timer);
 
-		index--;
+		Audio.index--;
+		var index = Audio.index;
 		if(index <= -1) {
 			index = songs.length - 1;
 		}
@@ -66,8 +73,6 @@ Audio.playerController = (function(){
 		var $singer = $('#playerPage .pageContent .musicName p span');
 		var $img = $('#playerPage .pageContent .positer img');
 		var $mpSrc = $('#audio');
-		var oAudio = $mpSrc.get(0);
-		var dura;
 
 		$bg.css('background-image', 'url('+data.img+')');
 		$song.html(data.song);
@@ -83,6 +88,7 @@ Audio.playerController = (function(){
 		play: play,
 		pause: pause,
 		nextSong: nextSong,
-		prevSong: prevSong
+		prevSong: prevSong,
+		render: render
 	}
 }())

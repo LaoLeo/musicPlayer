@@ -72,6 +72,7 @@ Audio.scale = (function() {
 			this.currNode.innerHTML = curr;
 
 			clearInterval(Audio.timer);
+			console.log(this.n)
 			audio.currentTime = this.n;
 			console.log("now:" + this.n);
 
@@ -96,7 +97,6 @@ Audio.scale = (function() {
 
 			this.step.style.width = Math.min(this.steps/100, this.max) + 'px';
 			this.btn.style.left = Math.min(this.steps/100, this.max) + 'px';
-
 	
 		},
 

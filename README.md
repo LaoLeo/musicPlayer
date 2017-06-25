@@ -1,5 +1,5 @@
 ## 音乐播放器WebApp
-显示的在线搜索和播放功能
+实现了在线搜索和播放功能
 
 ### 效果图
 ![image](http://note.youdao.com/yws/api/personal/file/221639B83D0B4AD3A49229F58A468023?method=download&shareKey=fb6cd7994e20ce6c6ea7f94a1609b490)
@@ -11,4 +11,4 @@
 * routes/songs.js //实现搜索功能，发http请求
 
 ### 笔记
-[https://laoleo.github.io/2017/06/25/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/#more](制作web音乐播放器有感)
+[制作web音乐播放器有感](https://laoleo.github.io/2017/06/25/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/#more)
